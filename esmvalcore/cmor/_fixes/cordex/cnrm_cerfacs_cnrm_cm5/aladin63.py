@@ -30,4 +30,8 @@ class Tas(Fix):
         return cubes
 
 
+Tasmax = Tas
+
+Tasmin = Tas
+
 Pr = BaseFix
