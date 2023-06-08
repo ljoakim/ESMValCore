@@ -8,6 +8,7 @@ import numpy as np
 from cf_units import Unit
 from iris.coord_systems import LambertConformal, RotatedGeogCS
 
+from esmvalcore.cmor._fixes.shared import add_scalar_height_coord
 from esmvalcore.cmor.fix import Fix
 from esmvalcore.exceptions import RecipeError
 
@@ -103,6 +104,28 @@ class CLMcomCCLM4817(Fix):
                     if coord.bounds is not None:
                         coord.bounds = coord.core_bounds().astype(
                             np.float64, casting='same_kind')
+        return cubes
+
+
+class IPSLWRF381P(Fix):
+    """Fixes for IPSL-WRF381P."""
+
+    def fix_metadata(self, cubes):
+        """Add height (2m) coordinate.
+
+        Parameters
+        ----------
+        cubes : iris.cube.CubeList
+            Input cubes.
+
+        Returns
+        -------
+        iris.cube.CubeList
+
+        """
+        for cube in cubes:
+            add_scalar_height_coord(cube)
+
         return cubes
 
 
