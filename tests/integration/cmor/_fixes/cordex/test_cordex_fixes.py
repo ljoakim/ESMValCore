@@ -141,6 +141,10 @@ def test_clmcomcclm4817_fix_metadata(cubes):
     lat.guess_bounds()
     lat.bounds = lat.core_bounds().astype(
         '>f4', casting='same_kind')
+    cubes[0].data = cubes[1].core_data().astype(
+        np.float32, casting='same_kind')
+    cubes[1].data = cubes[1].core_data().astype(
+        '>f4', casting='same_kind')
 
     fix = CLMcomCCLM4817(None)
     out_cubes = fix.fix_metadata(cubes)
@@ -151,6 +155,7 @@ def test_clmcomcclm4817_fix_metadata(cubes):
             calendar='proleptic_gregorian')
         for coord in cube.coords():
             assert coord.points.dtype == np.float64
+        assert cube.data.dtype == np.float32
 
 
 def test_ipslwrf381p_fix_metadata(cubes):
