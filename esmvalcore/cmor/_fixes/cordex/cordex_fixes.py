@@ -104,6 +104,9 @@ class CLMcomCCLM4817(Fix):
                     if coord.bounds is not None:
                         coord.bounds = coord.core_bounds().astype(
                             np.float64, casting='same_kind')
+            if cube.data.dtype == '>f4':
+                cube.data = cube.core_data().astype(
+                    np.float32, casting='same_kind')
         return cubes
 
 
