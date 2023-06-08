@@ -8,6 +8,7 @@ from cf_units import Unit
 from esmvalcore.cmor._fixes.cordex.cordex_fixes import (
     AllVars,
     CLMcomCCLM4817,
+    IPSLWRF381P,
     MOHCHadREM3GA705,
     TimeLongName,
 )
@@ -150,6 +151,14 @@ def test_clmcomcclm4817_fix_metadata(cubes):
             calendar='proleptic_gregorian')
         for coord in cube.coords():
             assert coord.points.dtype == np.float64
+
+
+def test_ipslwrf381p_fix_metadata(cubes):
+    fix = IPSLWRF381P(None)
+    out_cubes = fix.fix_metadata(cubes)
+    assert cubes is out_cubes
+    for cube in out_cubes:
+        assert cube.coord('height').points == 2.0
 
 
 def test_rotated_grid_fix(cordex_cubes):
