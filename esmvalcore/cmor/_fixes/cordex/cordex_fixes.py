@@ -132,6 +132,23 @@ class IPSLWRF381P(Fix):
         return cubes
 
 
+class GERICSREMO2015(TimeLongName):
+    """Fixes for GERICS-REMO2015."""
+
+    def fix_metadata(self, cubes):
+        super().fix_metadata(cubes)
+        for cube in cubes:
+            coord = cube.coord('longitude')
+            coord.points = np.where(
+                coord.points > 180, coord.points - 360, coord.points
+            )
+            if coord.bounds is not None:
+                coord.bounds = np.where(
+                    coord.bounds > 180, coord.bounds - 360, coord.bounds
+                )
+        return cubes
+
+
 class AllVars(Fix):
     """General CORDEX grid fix."""
 
