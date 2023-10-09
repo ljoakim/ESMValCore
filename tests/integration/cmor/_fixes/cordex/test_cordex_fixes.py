@@ -8,6 +8,7 @@ from cf_units import Unit
 from esmvalcore.cmor._fixes.cordex.cordex_fixes import (
     AllVars,
     CLMcomCCLM4817,
+    GERICSREMO2015,
     IPSLWRF381P,
     MOHCHadREM3GA705,
     TimeLongName,
@@ -164,6 +165,15 @@ def test_ipslwrf381p_fix_metadata(cubes):
     assert cubes is out_cubes
     for cube in out_cubes:
         assert cube.coord('height').points == 2.0
+
+
+def test_gericsremo2015_fix_metadata(cubes):
+    cubes[1].coord('longitude').points = np.array([360.0])
+    fix = GERICSREMO2015(None)
+    out_cubes = fix.fix_metadata(cubes)
+    assert cubes is out_cubes
+    assert cubes[0].coord('longitude').points[0] == 0.0
+    assert cubes[1].coord('longitude').points[0] == 0.0
 
 
 def test_rotated_grid_fix(cordex_cubes):
