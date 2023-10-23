@@ -6,7 +6,7 @@ import pytest
 from cf_units import Unit
 
 from esmvalcore.cmor._fixes.cordex.cordex_fixes import (
-    AllVars,
+    GridFix,
     CLMcomCCLM4817,
     GERICSREMO2015,
     IPSLWRF381P,
@@ -177,7 +177,7 @@ def test_gericsremo2015_fix_metadata(cubes):
 
 
 def test_rotated_grid_fix(cordex_cubes):
-    fix = AllVars(
+    fix = GridFix(
         vardef=None,
         extra_facets={
             'domain': 'EUR-11',
@@ -201,7 +201,7 @@ def test_rotated_grid_fix(cordex_cubes):
 
 
 def test_rotated_grid_fix_error(cordex_cubes):
-    fix = AllVars(
+    fix = GridFix(
         vardef=None,
         extra_facets={
             'domain': 'EUR-11',
@@ -217,7 +217,7 @@ def test_rotated_grid_fix_error(cordex_cubes):
 
 
 def test_lambert_grid_warning(cubes, caplog):
-    fix = AllVars(
+    fix = GridFix(
         vardef=None,
         extra_facets={
             'domain': 'EUR-11',
@@ -235,7 +235,7 @@ def test_lambert_grid_warning(cubes, caplog):
 
 
 def test_wrong_coord_system(cubes):
-    fix = AllVars(
+    fix = GridFix(
         vardef=None,
         extra_facets={
             'domain': 'EUR-11',
